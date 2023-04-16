@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import app from '../Firebase/Firebaseconfig';
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from "firebase/auth";
 const RegisterRBS = () => {
     const auth = getAuth(app);
     const [error, seterror] = useState('');
@@ -39,6 +39,7 @@ const RegisterRBS = () => {
                 seterror('')
                 event.target.reset();
                 setsuccess('user has carefully succed')
+                sendvarificationemail(result.user)
 
                 // ...
             })
@@ -49,6 +50,15 @@ const RegisterRBS = () => {
                 console.log(error);
 
             });
+    }
+
+    const sendvarificationemail = (user) => {
+        sendEmailVerification(user)
+            .then(result => {
+                console.log(result);
+                alert('please varify your email address')
+
+            })
     }
     return (
         <div>
